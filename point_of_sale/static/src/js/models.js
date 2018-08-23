@@ -1398,16 +1398,20 @@ exports.Orderline = Backbone.Model.extend({
             var quant = parseFloat(quantity) || 0;
             var unit = this.get_unit();
             if(unit){
+                console.log('unit case');
                 if (unit.rounding) {
+                    console.log('unit.rounding case');
                     this.quantity    = round_pr(quant, unit.rounding);
                     var decimals = this.pos.dp['Product Unit of Measure'];
                     this.quantity = round_di(this.quantity, decimals)
                     this.quantityStr = field_utils.format.float(this.quantity, {digits: [69, decimals]});
                 } else {
+                    console.log('not unit.rounding case');
                     this.quantity    = round_pr(quant, 1);
                     this.quantityStr = this.quantity.toFixed(0);
                 }
             }else{
+                console.log('not unit case');
                 this.quantity    = quant;
                 this.quantityStr = '' + this.quantity;
             }

@@ -48,7 +48,27 @@ odoo.define('testing.test', function (require) {
         init:function(parent, options){
             customAllproduct=parent.pos.allproduct;
             // console.log('customAllproduct',customAllproduct);
+            var self = this;
             this._super(parent,options);
+            // console.log('screen.js options',options);
+            // this.click_product_handler = function(){
+            //     console.log('rewritten and should do noyhing');
+            // };
+            this.click_product_handler = function(){
+                var product = self.pos.db.get_product_by_id(this.dataset.productId);
+                    
+                if(product.qty_available<=0 && product.type=='product'){
+                    // console.log('this.click_product_handler called',product);
+                    alert("out of stock");
+
+                }
+                else{
+                    options.click_product_action(product);
+                    product.qty_available=product.qty_available-1;
+                    // jquery or js to real time update values
+                    console.log(this.$('stock-tag'));
+                }
+            };
         },
         renderElement: function() {
             var el_str  = QWeb.render(this.template, {widget: this});
@@ -59,34 +79,61 @@ odoo.define('testing.test', function (require) {
             if(this.el && this.el.parentNode){
                 this.el.parentNode.replaceChild(el_node,this.el);
             }
+
+            // console.log('helo',this.$('div.chair-list'));
             this.el = el_node;
             // console.log('customAllproduct in render',customAllproduct[0].qty_available); 
             var list_container = el_node.querySelector('.product-list');
             
-            
-            console.log('product_list out render',this.product_list);
-            console.log('customAllproduct out render',customAllproduct);
+            //print random variable
+
+            // console.log('last printed',Math.random());
+            // console.log('gap');
+
+            // console.log('product_list out render',this.product_list);
+            // console.log('customAllproduct out render',customAllproduct);
+            // console.log('already there',this.product_list[0]);
+            // console.log('already there',this.product_list[0].qty_available);
+            // if(this.product_list[0].qty_available==undefined){
+            //     this.product_list[0].qty_available=1;
+            //     console.log('if already there',this.product_list[0].qty_available);
+            // }
+            // else{
+            //     this.product_list[0].qty_available=2;
+            //     console.log('else already there',this.product_list[0].qty_available);
+            // }
             for(var i = 0, len = this.product_list.length; i < len; i++){
                 // console.log(this.customAllproduct[0].qty_available);
 
                 // console.log('product_list in render',this.product_list[0].qty_available=customAllproduct[0].qty_available); 
-                
+                // // console.log('already there',this.product_list[i].qty_available);
+                // adding quantity commented
                 for(var j=0;j<customAllproduct.length;j++){
                     if(this.product_list[i].id==customAllproduct[j].id){
-                        this.product_list[i].qty_available=customAllproduct[j].qty_available;
-                        this.product_list[i].type=customAllproduct[j].type;
-                    
+                        if(this.product_list[i].qty_available==undefined){
+                            this.product_list[i].qty_available=customAllproduct[j].qty_available;
+                            this.product_list[i].type=customAllproduct[j].type;
+                        }
+                        else{
+
+                        }
+                        
                     }
                 }
-                console.log('product_list in render',this.product_list[i].qty_available);
+
+                // console.log('product_list in render',this.product_list[i].qty_available);
                 // console.log('customAllproduct in for render',customAllproduct[0].qty_available); 
             
                 var product_node = this.render_product(this.product_list[i]);
+                console.log('product_node',product_node);
                 // console.log(this.product_list);
-                if(this.product_list[i].qty_available>0){
-                    product_node.addEventListener('click',this.click_product_handler);
-                }
                 
+                //adding validate part hence commented 
+
+                // if(!(this.product_list[i].qty_available<=0 && this.product_list[i].type=='product')){
+                //     product_node.addEventListener('click',this.click_product_handler);
+                // }
+                product_node.addEventListener('click',this.click_product_handler);
                 list_container.appendChild(product_node);
             }
         },

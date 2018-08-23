@@ -830,6 +830,7 @@ var ProductListWidget = PosBaseWidget.extend({
         // console.log('ProductListWidget init');
         var self = this;
         this._super(parent,options);
+        // console.log('screen.js options',options);
         this.model = options.model;
         this.productwidgets = [];
         this.weight = options.weight || 0;
@@ -838,6 +839,7 @@ var ProductListWidget = PosBaseWidget.extend({
 
         this.click_product_handler = function(){
             var product = self.pos.db.get_product_by_id(this.dataset.productId);
+            // console.log('this.click_product_handler called',product);
             options.click_product_action(product);
         };
 
