@@ -50,13 +50,18 @@ odoo.define('testing.test', function (require) {
             // console.log('customAllproduct',customAllproduct);
             var self = this;
             this._super(parent,options);
+            // console.log('init',this.$('div.chair-list'));
             // console.log('screen.js options',options);
             // this.click_product_handler = function(){
             //     console.log('rewritten and should do noyhing');
             // };
             this.click_product_handler = function(){
                 var product = self.pos.db.get_product_by_id(this.dataset.productId);
-                    
+                
+                // console.log($(this).find("span.stock-tag-available")[0]);
+                // success 2
+                
+                // success 2
                 if(product.qty_available<=0 && product.type=='product'){
                     // console.log('this.click_product_handler called',product);
                     alert("out of stock");
@@ -66,7 +71,14 @@ odoo.define('testing.test', function (require) {
                     options.click_product_action(product);
                     product.qty_available=product.qty_available-1;
                     // jquery or js to real time update values
-                    console.log(this.$('stock-tag'));
+                    // console.log('find',product);
+                    // $(this).find('span.stock-tag-available').innerText=product.qty_available;
+                    var testnode2 = $(this).find("span.stock-tag-available")[0];
+                    if($(testnode2)[0]){
+                        // console.log('testnode',$(testnode2)[0].innerHTML);
+                        $(testnode2)[0].innerHTML=product.qty_available;
+                    }
+                    // jquery ends
                 }
             };
         },
@@ -125,7 +137,15 @@ odoo.define('testing.test', function (require) {
                 // console.log('customAllproduct in for render',customAllproduct[0].qty_available); 
             
                 var product_node = this.render_product(this.product_list[i]);
-                console.log('product_node',product_node);
+                // success
+                // var testnode = $(product_node).find("span.stock-tag-available")[0];
+                // if($(testnode)[0]){
+                //     // console.log('testnode',$(testnode)[0].innerHTML.trim());
+                //     $(testnode)[0].innerHTML=10;
+                // }    
+                // success 
+                    
+                // console.log('sudhanshu',this.$('div.chair-list'));
                 // console.log(this.product_list);
                 
                 //adding validate part hence commented 
