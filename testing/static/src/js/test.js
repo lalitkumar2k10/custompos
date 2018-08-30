@@ -63,8 +63,16 @@ odoo.define('testing.test', function (require) {
                 
                 // success 2
                 if(product.qty_available<=0 && product.type=='product'){
-                    // console.log('this.click_product_handler called',product);
-                    alert("out of stock");
+                    
+                    alert('out of stock');
+                    
+                    // console.log($(testnode2));
+                    
+                    // if($(testnode2)[0]){
+                    //     console.log('testnode',$(testnode2)[0]);
+                    //     $(testnode2)[0].style.display=none;
+                    // }
+
 
                 }
                 else{
@@ -78,6 +86,17 @@ odoo.define('testing.test', function (require) {
                         // console.log('testnode',$(testnode2)[0].innerHTML);
                         $(testnode2)[0].innerHTML=product.qty_available;
                     }
+                    // setting  color here
+                    if(product.qty_available<=0 && product.type=='product'){
+                        // better
+                        var testnode2 = $(this).find("span.product")['context'];//not [0]
+                        $(testnode2)[0].className='product setblur';
+                        // done 
+                        // $(testnode2)[0].style.background='red';
+                        // var testnode2 = $(this).find("span.product")['context'];//not [0]
+                        // $(testnode2)[0].style.opacity='0.3';
+                    }
+
                     // jquery ends
                 }
             };

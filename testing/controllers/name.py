@@ -12,7 +12,7 @@ from werkzeug.utils import secure_filename
 import datetime
 
 
-class MOBAPI(odoo.http.Controller):
-	@http.route('/api/test', methods=['POST'], type='http', auth='public', website=True, csrf=False)
-	def test(self, **post)
-		print('hello')
+# class MOBAPI(odoo.http.Controller):
+# 	@http.route('/api/test', methods=['POST'], type='http', auth='public', website=True, csrf=False)
+# 	def test(self, **post)
+# 		print('hello')
